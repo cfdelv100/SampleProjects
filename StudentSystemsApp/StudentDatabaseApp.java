@@ -1,17 +1,17 @@
-package com.company;
-
 import java.util.Scanner;
 
-public class Student {
+public class StudentDatabaseApp {
     private String firstName;
     private String lastName;
     private int gradeYear;
-    private int studentID;
-    private String courses;
-    private String tuitionBalance;
-    private int costOfCourse = 600;
+    private String studentID;
+    private String courses = "";
+    private int tuitionBalance = 0;
+    private static int costOfCourse = 600;
+    private static int id = 1001;
+
     //Constructor: prompt user to enter the student's name and year
-  public StudentDatabaseApp(){
+    public StudentDatabaseApp(){
         Scanner in = new Scanner(System.in);
         System.out.println("Enter the student's First Name: ");
         this.firstName = in.nextLine();
@@ -23,8 +23,6 @@ public class Student {
         this.gradeYear = in.nextInt();
 
         setStudentID();
-        System.out.println(firstName +  " " + lastName + " " + gradeYear  + " " + studentID);
-
     }
 
     // Generate an ID
@@ -33,32 +31,48 @@ public class Student {
         id++; // adds one to the id of student
         this.studentID = gradeYear + "" + id;
 
+    }
+
     //Enroll in courses
     public void enroll(){
         //get inside a loop, user hits 0
        do { 
-           System.out.println("Enter a course to enroll (Q to quit): ");
+           System.out.print("Enter a course to enroll (Q to quit): ");
            Scanner in = new Scanner(System.in);
            String course = in.nextLine();
            if(!course.equals("Q")) {
-             courses = course + "\n" + course;
-             tuitionBalance = tuitionBalance + costOfCourse;
+             courses = courses + "\n " + course;
+             tuitionBalance += costOfCourse;
             }
            else{
                 break;
             }
          } while(1 != 0);
-           
-         System.out.print("ENROLLED IN: " + courses);
-         System.out.println("TUITION BALANCE: " + tuitionBalance);
+     }
+    // View Balances
+    public void viewBalances(){
+        System.out.println("The balance remaining is: $" + tuitionBalance);
+
     }
 
-    // View Balances
-
     // Pay Balances
+    public void payBalances(){
+        viewBalances();
+        System.out.print("Enter your payment: $");
+        Scanner in  = new Scanner(System.in);
+        
+        int payment = in.nextInt();
+        tuitionBalance -= payment;
+        System.out.println("Thank you for your payment of: $" + payment);
+        viewBalances();
+
+    }
 
     // Show status
-
-    
-
+    public String toString(){
+        return "Name: " + firstName + " " + lastName +  "\nGrade Level: " + gradeYear +
+        "\nStudent ID: " + studentID + "\nCourses Enrolled:" +
+        courses + "\nBalance: $" + tuitionBalance;
+    }
 }
+
